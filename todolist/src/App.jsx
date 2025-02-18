@@ -11,6 +11,10 @@ function App() {
     setTodos([...todos, desc]);
   }
 
+  const deleteTask = (index) => {
+    setTodos(todos.filter((desc, i) => i !== index));
+  }
+
   return (
     <>
       <h1>Simple Todolist</h1>
@@ -49,6 +53,7 @@ function App() {
             <tr key={index}>
               <td>{task.date}</td>
               <td>{task.description}</td>
+              <td><button onClick={() => deleteTask(index)}>Delete</button></td>
             </tr>))}
         </tbody>
       </table>
