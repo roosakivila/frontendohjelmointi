@@ -6,17 +6,13 @@
 }
 
 #add {
+  font-weight: bold;
   text-align: left;
   padding-bottom: 2px;
   margin: 0;
 }
 
-#addtodo {
-  border: 1px solid;
-  border-color: black;
-  padding-left: 10px;
-  padding-right: 10px;
-}
+
 
 #list {
   text-align: center;
