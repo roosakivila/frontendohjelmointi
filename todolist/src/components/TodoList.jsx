@@ -2,17 +2,23 @@ import React from "react";
 import { useState, useRef } from 'react';
 import { Button, Stack, TextField } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 import TodoTable from "./TodoTable.jsx";
 
 export default function TodoList({ todos, setTodos }) {
 
-    const [desc, setDesc] = useState({ description: '', date: '', priority: '' });
+    const [desc, setDesc] = useState({ description: '', date: dayjs(), priority: '' });
     const gridRef = useRef();
+
 
     const addTodos = () => {
         console.log("Lisätään todo");
-        setTodos([...todos, desc]);
-        setDesc({ description: "", date: "", priority: "" });
+        const formattedDate = desc.date.format('DD.MM.YYYY');
+        setTodos([...todos, { ...desc, date: formattedDate }]);
+        setDesc({ description: "", date: dayjs(), priority: "" });
     }
 
     const handleDelete = () => {
@@ -34,11 +40,19 @@ export default function TodoList({ todos, setTodos }) {
                     onChange={(event) => setDesc({ ...desc, description: event.target.value })}
                     value={desc.description}
                 />
-                <TextField variant='standard'
+                {/* <TextField variant='standard'
                     label='Date'
                     onChange={(event) => setDesc({ ...desc, date: event.target.value })}
                     value={desc.date}
-                />
+                /> */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Date"
+                        value={desc.date}
+                        onChange={(newValue) => setDesc({ ...desc, date: newValue })}
+                        slotProps={{ textField: { variant: "standard" } }}
+                    />
+                </LocalizationProvider>
                 <TextField variant='standard'
                     label='Priority'
                     onChange={(event) => setDesc({ ...desc, priority: event.target.value })}
