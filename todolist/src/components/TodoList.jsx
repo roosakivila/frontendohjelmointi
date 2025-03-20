@@ -1,5 +1,7 @@
 import React from "react";
-import { useState, useRef } from 'react'
+import { useState, useRef } from 'react';
+import { Button, Stack, TextField } from '@mui/material';
+import DeleteIcon from "@mui/icons-material/Delete";
 import TodoTable from "./TodoTable.jsx";
 
 export default function TodoList({ todos, setTodos }) {
@@ -25,40 +27,27 @@ export default function TodoList({ todos, setTodos }) {
 
     return (
         <>
-            <h1>Simple Todolist</h1>
-            <div id="addtodo">
-                <p id="add">Add todo:</p>
-                <label htmlFor='description'>Description: </label>
-                <input
-                    type="text"
-                    name='description'
-                    id='description'
-                    placeholder='Syötä kuvaus'
-                    value={desc.description}
+            <Stack mt={2} mb={2} direction="row" spacing={2} justifyContent="center"
+                alignItems="center">
+                <TextField variant='standard'
+                    label='Description'
                     onChange={(event) => setDesc({ ...desc, description: event.target.value })}
+                    value={desc.description}
                 />
-                <label htmlFor='date'>Date: </label>
-                <input
-                    type="date"
-                    name='date'
-                    id='date'
-                    placeholder='Syötä päivämäärä'
-                    value={desc.date}
+                <TextField variant='standard'
+                    label='Date'
                     onChange={(event) => setDesc({ ...desc, date: event.target.value })}
+                    value={desc.date}
                 />
-                <label htmlFor='priority'>Priority: </label>
-                <input
-                    type="text"
-                    name='priority'
-                    id='priority'
-                    placeholder='Syötä tärkeys'
-                    value={desc.priority}
+                <TextField variant='standard'
+                    label='Priority'
                     onChange={(event) => setDesc({ ...desc, priority: event.target.value })}
+                    value={desc.priority}
                 />
-                <button onClick={addTodos}>Add</button>
-                <button onClick={handleDelete}>Delete</button>
+                <Button variant="outlined" onClick={addTodos}>Add</Button>
+                <Button variant="outlined" color="error" endIcon={<DeleteIcon />} onClick={handleDelete}>Delete</Button>
+            </Stack>
 
-            </div>
             <TodoTable todos={todos} gridRef={gridRef} />
         </>
     );
